@@ -32,7 +32,7 @@ while($currentCount -lt $numberOfLines){
 
 foreach($line in $listOfItems) {
    $controlNumber = '{0:d8}' -f ($currentCount+1)
-   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^..\$directoryWithItems\$line^"
+   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^DocumentsForLoadFile\$line^"
    $currentCount ++
    IF($currentCount -ge $numberOfLines){
    break
@@ -41,4 +41,7 @@ foreach($line in $listOfItems) {
 
 }
 
-Write-Host "You have created $numberOfLines documents for $loadFileName.csv"
+Write-Host "You have created $numberOfLines documents in $directoryWithItems"
+Write-Host "Please find your loadfile in $filepath"
+Read-Host "Press any key to exit..."
+exit
