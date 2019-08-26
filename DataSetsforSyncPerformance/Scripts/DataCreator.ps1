@@ -1,4 +1,4 @@
-﻿$createDirectoryForData = New-Item -Path $createDirectory -type "directory" -Name "DocumentsForLoadFile"
+﻿$createDirectoryForData = New-Item -Path $createDirectory -type "directory" -Name "NATIVES"
 $listOfSupportedFiles = "Data\listofitems.txt"
 
 #choose file size

@@ -2,17 +2,19 @@
 $numberOfLines = Read-Host 'How many documents in the Loadfile?'
 $newDirectoryPath = Read-Host "Provide path where you want to create data: "
 
-#$checkPath = Test-Path $createDirectory\$loadFileName
-#IF($checkPath -eq $true){
-#$createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory}
-#else  {$createDirectory = "$newDirectoryPath\$loadFileName"}
-
 $createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory
 $filepath = "$createDirectory\$loadFileName.txt"
 
 New-Item $filepath -type file
 
-.\Data\DataCreator.ps1 $createDirectory
+#produce natives and text files
+
+.\Scripts\DataCreator.ps1 $createDirectory
+
+$extractedTextGenerator = Read-Host "Do you want to create Extrated Text files?: [Y/N]?"
+If($extractedTextGenerator = "y"){
+    .\Scripts\CreateExtractedText.ps1
+    }
 
 $header = Get-Content -Path "Data\FieldsMapping\100_FieldsHeader.txt" #list of Fields Name
 
@@ -22,7 +24,7 @@ $fieldscontent = Get-Content -Path "Data\FieldsMapping\FilledFields.txt" #conten
 
 #get list of created files
 
-$directoryWithItems = "$createDirectory\DocumentsForLoadFile" #native file location
+$directoryWithItems = "$createDirectory\NATIVES" #native file location
 $listOfItems = Get-ChildItem $directoryWithItems | ForEach-Object { $_.Name }
 
 #create CSV Load File
@@ -32,13 +34,12 @@ while($currentCount -lt $numberOfLines){
 
 foreach($line in $listOfItems) {
    $controlNumber = '{0:d8}' -f ($currentCount+1)
-   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^DocumentsForLoadFile\$line^"
+   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^NATIVES\$line^|^$extractedTextPath"
    $currentCount ++
    IF($currentCount -ge $numberOfLines){
    break
    }
   }
-
 }
 
 Write-Host "You have created $numberOfLines documents in $directoryWithItems"
