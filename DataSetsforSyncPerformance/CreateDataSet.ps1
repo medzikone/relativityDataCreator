@@ -27,6 +27,14 @@ $fieldscontent = Get-Content -Path "Data\FieldsMapping\FilledFields.txt" #conten
 $directoryWithItems = "$createDirectory\NATIVES" #native file location
 $listOfItems = Get-ChildItem $directoryWithItems | ForEach-Object { $_.Name }
 
+######## TBC
+$extractedTextSize = (get-item $createDirectory\TEXT\TEXT.txt).length/1KB
+Write-Host $extractedTextSize
+
+$extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
+
+########
+
 #create CSV Load File
 $currentCount = 0
 
@@ -34,7 +42,7 @@ while($currentCount -lt $numberOfLines){
 
 foreach($line in $listOfItems) {
    $controlNumber = '{0:d8}' -f ($currentCount+1)
-   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^NATIVES\$line^|^$extractedTextPath"
+   add-content $filepath -Value "^REL$controlNumber^$fieldscontent^NATIVES\$line^|$extractedTextLoadFile"
    $currentCount ++
    IF($currentCount -ge $numberOfLines){
    break
