@@ -28,7 +28,7 @@ If ($fixOrRandomText -eq 'R'){
         $generateOneKB = Get-Random -Minimum $minimumTextSizeFileRandom -Maximum $maximumTextSizeFileRandom
 
         $extractedText = -join((33..126) *11*100 | Get-Random -Count 1024 | % {[char]$_})
-        Add-Content -NoNewline -path "$createDirectoryForText\TEXT$textFile.txt" -value ($extractedText*$generateOneKB)
+        Add-Content -NoNewline -path "$createDirectoryForText\SMALL_TEXT$textFile.txt" -value ($extractedText*$generateOneKB)
 
         }
     }
