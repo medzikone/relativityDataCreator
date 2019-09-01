@@ -1,5 +1,5 @@
 ﻿$createDirectoryForData = New-Item -Path $createDirectory -type "directory" -Name "NATIVES"
-$listOfSupportedFiles = "Data\listofitems.txt"
+$listOfSupportedFiles = "Data\ListOfSupportedFiles.txt"
 
 #choose file size
 $fixOrRandom = Read-Host -Prompt "Do you want use random or fixed size files?: [R]andom/[F]ixed"
