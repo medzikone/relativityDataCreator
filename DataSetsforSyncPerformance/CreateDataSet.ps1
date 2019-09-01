@@ -42,9 +42,6 @@ If($extractedTextGenerator -eq "y"){
     $extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
     }
 
-
-########
-
 #create CSV Load File
 $currentCount = 0
 do {

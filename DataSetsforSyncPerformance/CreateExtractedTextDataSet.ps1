@@ -1,5 +1,14 @@
 ﻿$loadFileName = Read-Host 'Enter Extracted Text Loadfile name'
-$numberOfLines = Read-Host 'How many documents in the Loadfile?'
+
+do {
+    try {
+        $numOk = $true
+        [int]$numberOfLines = Read-Host 'How many documents in the Loadfile?'
+        } # end try
+    catch {$numOK = $false}
+    }
+    until ($numberOfLines -ge 1 -and $numOK)
+
 $newDirectoryPath = Read-Host "Provide path where you want to create data: "
 
 $createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory
@@ -22,6 +31,15 @@ $listOfItems = Get-ChildItem $directoryWithItems | ForEach-Object { $_.Name }
 
 #create CSV Load File
 $currentCount = 0
+
+do {
+    try {
+        $numOk = $true
+        [int]$startControlNumber = Read-Host 'Please provide first Control Number: '
+        } 
+    catch {$numOK = $false}
+    }
+    until ($startControlNumber -ge 1 -and $numOK)
 
 while($currentCount -lt $numberOfLines){
 

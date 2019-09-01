@@ -1,11 +1,10 @@
 ﻿#this script takes range of lines from load file and export them to another loadfile
-clear
 
-$filepath =  "S:\LOADFILES_TESTCASES\3500_of_1kb_plus_1kb_et\3500_of_1kb_plus_1kb_et_02.txt"
-$line = 973950
+$filepath =  #filepath with extension
+$line = #number of line to start
 $timestamp = Get-Date -f HH_mm_ss
 
-$newfile = "S:\TEST\"
+$newfile = #path where new file will be created
 New-Item -Path $newfile -type file
 
 #count number of lines in file or set $numberOfLines to specify where is end of load file
