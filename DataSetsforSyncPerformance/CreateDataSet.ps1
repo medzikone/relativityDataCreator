@@ -1,5 +1,14 @@
 ﻿$loadFileName = Read-Host 'Enter Loadfile name'
-$numberOfLines = Read-Host 'How many documents in the Loadfile?'
+
+do {
+    try {
+        $numOk = $true
+        [int]$numberOfLines = Read-Host 'How many documents in the Loadfile?'
+        } # end try
+    catch {$numOK = $false}
+    }
+    until ($numberOfLines -ge 1 -and $numOK)
+
 $newDirectoryPath = Read-Host "Provide path where you want to create data: "
 
 $createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory
@@ -7,14 +16,8 @@ $filepath = "$createDirectory\$loadFileName.txt"
 
 New-Item $filepath -type file
 
-#produce natives and text files
-
+#create physical files
 .\Scripts\DataCreator.ps1 $createDirectory
-
-$extractedTextGenerator = Read-Host "Do you want to create Extrated Text files?: [Y/N]?"
-If($extractedTextGenerator = "y"){
-    .\Scripts\CreateExtractedText.ps1
-    }
 
 $header = Get-Content -Path "Data\FieldsMapping\100_FieldsHeader.txt" #list of Fields Name
 
@@ -27,11 +30,18 @@ $fieldscontent = Get-Content -Path "Data\FieldsMapping\FilledFields.txt" #conten
 $directoryWithItems = "$createDirectory\NATIVES" #native file location
 $listOfItems = Get-ChildItem $directoryWithItems | ForEach-Object { $_.Name }
 
+<#
 ######## TBC
-$extractedTextSize = (get-item $createDirectory\TEXT\TEXT.txt).length/1KB
 Write-Host $extractedTextSize
+#> #extracted text
 
-$extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
+$extractedTextGenerator = Read-Host "Do you want to create Extrated Text files?: [Y/N]?"
+If($extractedTextGenerator -eq "y"){
+    .\Scripts\CreateExtractedText.ps1
+    $extractedTextSize = (get-item $createDirectory\TEXT\TEXT.txt).length/1KB
+    $extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
+    }
+
 
 ########
 
