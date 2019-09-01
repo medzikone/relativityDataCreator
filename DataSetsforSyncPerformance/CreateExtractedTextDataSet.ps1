@@ -4,7 +4,7 @@ do {
     try {
         $numOk = $true
         [int]$numberOfLines = Read-Host 'How many documents in the Loadfile?'
-        } # end try
+        }
     catch {$numOK = $false}
     }
     until ($numberOfLines -ge 1 -and $numOK)
