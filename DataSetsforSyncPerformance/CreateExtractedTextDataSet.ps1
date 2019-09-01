@@ -44,7 +44,7 @@ do {
 while($currentCount -lt $numberOfLines){
 
 foreach($line in $listOfItems) {
-   $controlNumber = '{0:d8}' -f ($currentCount+1)
+   $controlNumber = '{0:d8}' -f ($currentCount+$startControlNumber)
    add-content $filepath -Value "^REL$controlNumber^|^TEXT\$line^"
    $currentCount ++
    IF($currentCount -ge $numberOfLines){
