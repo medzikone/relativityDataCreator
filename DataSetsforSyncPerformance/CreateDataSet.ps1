@@ -47,11 +47,19 @@ If($extractedTextGenerator -eq "y"){
 
 #create CSV Load File
 $currentCount = 0
+do {
+    try {
+        $numOk = $true
+        [int]$startControlNumber = Read-Host 'Please provide first Control Number: '
+        } 
+    catch {$numOK = $false}
+    }
+    until ($startControlNumber -ge 1 -and $numOK)
 
 while($currentCount -lt $numberOfLines){
 
 foreach($line in $listOfItems) {
-   $controlNumber = '{0:d8}' -f ($currentCount+1)
+   $controlNumber = '{0:d8}' -f ($currentCount+$startControlNumber)
    add-content $filepath -Value "^REL$controlNumber^$fieldscontent^NATIVES\$line^|$extractedTextLoadFile"
    $currentCount ++
    IF($currentCount -ge $numberOfLines){
