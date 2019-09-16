@@ -67,5 +67,5 @@ foreach($line in $listOfItems) {
 
 Write-Host "You have created $numberOfLines documents in $directoryWithItems"
 Write-Host "Please find your loadfile in $filepath"
-Read-Host "Press any key to exit..."
+Read-Host "Press ENTER key to exit..."
 exit
