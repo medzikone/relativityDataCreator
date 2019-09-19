@@ -11,7 +11,7 @@ do {
 
 $newDirectoryPath = Read-Host "Provide path where you want to create data: "
 
-$createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory
+$createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory -Force
 $filepath = "$createDirectory\$loadFileName.txt"
 
 New-Item $filepath -type file
