@@ -13,7 +13,7 @@ $filepath = "$createDirectory\$loadFileName.txt"
 New-Item $filepath -type file
 
 #create physical files
-.\DataSetsScripts\NativeFilesCreator.ps1 $createDirectory
+.\Scripts\DataSetsScripts\NativeFilesCreator.ps1 $createDirectory
 
 $header = Get-Content -Path "Data\FieldsMapping\100_FieldsHeader.txt" #list of Fields Name
 
@@ -32,7 +32,7 @@ Write-Host $extractedTextSize
 #> #extracted text
 
 If($extractedTextGenerator -eq "y"){
-    .\DataSetsScripts\CreateExtractedText.ps1
+    .\Scripts\DataSetsScripts\CreateExtractedText.ps1
     $extractedTextSize = (get-item $createDirectory\TEXT\TEXT.txt).length/1KB
     $extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
     }
