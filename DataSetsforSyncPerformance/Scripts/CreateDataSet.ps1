@@ -1,15 +1,11 @@
-﻿$loadFileName = Read-Host 'Enter Loadfile name'
-
-do {
+﻿do {
     try {
         $numOk = $true
-        [int]$numberOfLines = Read-Host 'How many documents in the Loadfile?'
+
         } # end try
     catch {$numOK = $false}
     }
     until ($numberOfLines -ge 1 -and $numOK)
-
-$newDirectoryPath = Read-Host "Provide path where you want to create data: "
 
 $createDirectory = New-Item -Path $newDirectoryPath -Name $loadFileName -type directory -Force
 $filepath = "$createDirectory\$loadFileName.txt"
@@ -17,7 +13,7 @@ $filepath = "$createDirectory\$loadFileName.txt"
 New-Item $filepath -type file
 
 #create physical files
-.\Scripts\DataCreator.ps1 $createDirectory
+.\Scripts\DataSetsScripts\NativeFilesCreator.ps1 $createDirectory
 
 $header = Get-Content -Path "Data\FieldsMapping\100_FieldsHeader.txt" #list of Fields Name
 
@@ -35,9 +31,8 @@ $listOfItems = Get-ChildItem $directoryWithItems | ForEach-Object { $_.Name }
 Write-Host $extractedTextSize
 #> #extracted text
 
-$extractedTextGenerator = Read-Host "Do you want to create Extrated Text files?: [Y/N]?"
 If($extractedTextGenerator -eq "y"){
-    .\Scripts\CreateExtractedText.ps1
+    .\Scripts\DataSetsScripts\CreateExtractedText.ps1
     $extractedTextSize = (get-item $createDirectory\TEXT\TEXT.txt).length/1KB
     $extractedTextLoadFile = "^TEXT\TEXT.txt^|^$extractedTextSize^"
     }
@@ -47,8 +42,7 @@ $currentCount = 0
 do {
     try {
         $numOk = $true
-        [int]$startControlNumber = Read-Host 'Please provide first Control Number: '
-        } 
+} 
     catch {$numOK = $false}
     }
     until ($startControlNumber -ge 1 -and $numOK)
